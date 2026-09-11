@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ student.name }}</h2>
+<p><b>Roll No:</b> {{ student.roll_no }} | <b>Department:</b> {{ student.department }} | <b>Year:</b> {{ student.year }}</p>
+<table class="table table-bordered">
+<thead><tr><th>Date</th><th>Status</th><th>Marked At</th></tr></thead>
+<tbody>
+{% for r in records %}
+<tr><td>{{ r.attendance_date }}</td><td>{{ r.status }}</td><td>{{ r.marked_at }}</td></tr>
+{% else %}
+<tr><td colspan="3">No attendance records.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+<a class="btn btn-secondary" href="{{ url_for('students') }}">Back</a>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Daily Attendance</h2>
+<form method="get" class="mb-3">
+  <label class="form-label">Select date</label>
+  <input class="form-control" type="date" name="attendance_date" value="{{ selected_date }}" onchange="this.form.submit()">
+</form>
+
+<div class="table-responsive">
+<table class="table table-bordered align-middle">
+<thead><tr><th>Roll No</th><th>Name</th><th>Status</th></tr></thead>
+<tbody>
+{% for s in students %}
+<tr>
+<td>{{ s.roll_no }}</td>
+<td>{{ s.name }}</td>
+<td>
+{% if s.id in marked %}
+  <span class="badge bg-secondary">Already marked</span>
+{% else %}
+<form method="post" class="d-flex gap-2">
+  <input type="hidden" name="student_id" value="{{ s.id }}">
+  <input type="hidden" name="attendance_date" value="{{ selected_date }}">
+  <button name="status" value="Present" class="btn btn-success btn-sm">Present</button>
+  <button name="status" value="Absent" class="btn btn-danger btn-sm">Absent</button>
+</form>
+{% endif %}
+</td>
+</tr>
+{% else %}
+<tr><td colspan="3" class="text-center">Add students first.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<h4 class="mt-4">Records for {{ selected_date }}</h4>
+<table class="table table-sm table-striped">
+<thead><tr><th>Roll No</th><th>Name</th><th>Status</th><th>Marked At</th></tr></thead>
+<tbody>
+{% for r in records %}
+<tr><td>{{ r.roll_no }}</td><td>{{ r.name }}</td><td>{{ r.status }}</td><td>{{ r.marked_at }}</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

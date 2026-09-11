@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Student Management</h2>
+<form method="post" class="card card-body shadow-sm mb-4">
+  <div class="row g-2">
+    <div class="col-md-2"><input class="form-control" name="roll_no" placeholder="Roll No" required></div>
+    <div class="col-md-3"><input class="form-control" name="name" placeholder="Student Name" required></div>
+    <div class="col-md-2"><input class="form-control" name="department" placeholder="Department" required></div>
+    <div class="col-md-2"><input class="form-control" type="number" name="year" min="1" max="5" placeholder="Year" required></div>
+    <div class="col-md-2"><input class="form-control" type="email" name="email" placeholder="Email"></div>
+    <div class="col-md-1"><button class="btn btn-primary w-100">Add</button></div>
+  </div>
+</form>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead><tr><th>Roll No</th><th>Name</th><th>Department</th><th>Year</th><th>Details</th></tr></thead>
+<tbody>
+{% for s in students %}
+<tr>
+  <td>{{ s.roll_no }}</td><td>{{ s.name }}</td><td>{{ s.department }}</td><td>{{ s.year }}</td>
+  <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('student_detail', student_id=s.id) }}">View</a></td>
+</tr>
+{% else %}
+<tr><td colspan="5" class="text-center">No students yet.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}
